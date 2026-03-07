@@ -12,10 +12,8 @@ import { authenticate } from '../middleware/auth.middleware';
 
 const router: ExpressRouter = Router();
 
-// Public route - share link (must come before :id to prevent conflict)
 router.get('/share/:shareToken', getSharedEvent);
 
-// Protected routes
 router.use(authenticate);
 router.get('/', getEvents);
 router.post('/', createEvent);

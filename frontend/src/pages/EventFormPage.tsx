@@ -26,12 +26,10 @@ export const EventFormPage = () => {
     const [error, setError] = useState('');
     const [fetching, setFetching] = useState(isEdit);
 
-    // Load event data when editing
     useEffect(() => {
         if (!isEdit || !id) return;
         eventsApi.getOne(id).then(res => {
             const ev = res.data.event;
-            // Format dateTime for datetime-local input (local time)
             const dt = new Date(ev.dateTime);
             const localDT = format(dt, "yyyy-MM-dd'T'HH:mm");
             setForm({
@@ -89,7 +87,6 @@ export const EventFormPage = () => {
         );
     }
 
-    // Min datetime = now (for new events)
     const now = format(new Date(), "yyyy-MM-dd'T'HH:mm");
 
     return (

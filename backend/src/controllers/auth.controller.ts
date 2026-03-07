@@ -11,7 +11,6 @@ const generateToken = (userId: string): string => {
     return jwt.sign({ userId }, process.env.JWT_SECRET as string, opts);
 };
 
-// POST /api/auth/register
 export const register: RequestHandler = async (req, res, next) => {
     try {
         const data = registerSchema.parse(req.body);
@@ -30,7 +29,6 @@ export const register: RequestHandler = async (req, res, next) => {
     } catch (err) { next(err); }
 };
 
-// POST /api/auth/login
 export const login: RequestHandler = async (req, res, next) => {
     try {
         const data = loginSchema.parse(req.body);
@@ -50,7 +48,6 @@ export const login: RequestHandler = async (req, res, next) => {
     } catch (err) { next(err); }
 };
 
-// GET /api/auth/me
 export const getMe: RequestHandler = async (req, res, next) => {
     try {
         const authReq = req as AuthRequest;

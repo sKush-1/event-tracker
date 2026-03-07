@@ -4,7 +4,6 @@ import { createEventSchema, updateEventSchema } from '../schemas/validation.sche
 import { AppError } from '../middleware/error.middleware';
 import type { AuthRequest } from '../middleware/auth.middleware';
 
-// GET /api/events?filter=upcoming|past
 export const getEvents: RequestHandler = async (req, res, next) => {
     try {
         const authReq = req as AuthRequest;
@@ -25,7 +24,6 @@ export const getEvents: RequestHandler = async (req, res, next) => {
     } catch (err) { next(err); }
 };
 
-// POST /api/events
 export const createEvent: RequestHandler = async (req, res, next) => {
     try {
         const authReq = req as AuthRequest;
@@ -46,7 +44,6 @@ export const createEvent: RequestHandler = async (req, res, next) => {
     } catch (err) { next(err); }
 };
 
-// GET /api/events/:id
 export const getEvent: RequestHandler = async (req, res, next) => {
     try {
         const authReq = req as AuthRequest;
@@ -61,7 +58,6 @@ export const getEvent: RequestHandler = async (req, res, next) => {
     } catch (err) { next(err); }
 };
 
-// PATCH /api/events/:id
 export const updateEvent: RequestHandler = async (req, res, next) => {
     try {
         const authReq = req as AuthRequest;
@@ -86,7 +82,6 @@ export const updateEvent: RequestHandler = async (req, res, next) => {
     } catch (err) { next(err); }
 };
 
-// DELETE /api/events/:id
 export const deleteEvent: RequestHandler = async (req, res, next) => {
     try {
         const authReq = req as AuthRequest;
@@ -100,7 +95,6 @@ export const deleteEvent: RequestHandler = async (req, res, next) => {
     } catch (err) { next(err); }
 };
 
-// GET /api/events/share/:shareToken (public, no auth)
 export const getSharedEvent: RequestHandler = async (req, res, next) => {
     try {
         const shareToken = String(req.params.shareToken);

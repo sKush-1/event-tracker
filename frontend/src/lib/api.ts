@@ -7,7 +7,6 @@ const api = axios.create({
     headers: { 'Content-Type': 'application/json' },
 });
 
-// Attach JWT token to every request
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -16,7 +15,6 @@ api.interceptors.request.use((config) => {
     return config;
 });
 
-// Handle 401 globally (token expired)
 api.interceptors.response.use(
     (res) => res,
     (err) => {
@@ -29,7 +27,6 @@ api.interceptors.response.use(
     }
 );
 
-// ── Auth ────────────────────────────────────────────────────────────
 export const authApi = {
     register: (data: { name: string; email: string; password: string }) =>
         api.post('/auth/register', data),
@@ -38,7 +35,6 @@ export const authApi = {
     me: () => api.get('/auth/me'),
 };
 
-// ── Events ──────────────────────────────────────────────────────────
 export const eventsApi = {
     getAll: (filter?: 'upcoming' | 'past' | 'all') =>
         api.get('/events', { params: filter && filter !== 'all' ? { filter } : undefined }),

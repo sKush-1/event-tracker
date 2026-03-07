@@ -29,7 +29,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        // Verify token on mount
         if (token && !user) {
             authApi.me().then(res => {
                 setUser(res.data.user);

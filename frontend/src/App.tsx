@@ -10,7 +10,6 @@ import { EventsListPage } from './pages/EventsListPage';
 import { EventFormPage } from './pages/EventFormPage';
 import { SharedEventPage } from './pages/SharedEventPage';
 
-// Layout wrapper for protected pages (includes Navbar)
 const ProtectedLayout = () => (
   <>
     <Navbar />
