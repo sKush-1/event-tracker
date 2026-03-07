@@ -8,7 +8,7 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 
 # Copy manifests and install ALL deps (including dev for tsc)
 COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
+RUN pnpm install
 
 # Copy source and Prisma config
 COPY tsconfig.json nodemon.json prisma.config.ts ./
@@ -31,7 +31,7 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 # Copy manifests and install PRODUCTION deps only
 COPY package.json pnpm-lock.yaml ./
 # Allow prisma build scripts so the engines are available at runtime
-RUN pnpm install --frozen-lockfile --prod --config.onlyBuiltDependencies="@prisma/engines,prisma"
+RUN pnpm install --prod --config.onlyBuiltDependencies="@prisma/engines,prisma"
 
 # Copy compiled output and generated Prisma client from builder
 COPY --from=builder /app/dist ./dist
