@@ -2,6 +2,15 @@
 
 A full-stack web application for managing personal events, built with modern technologies as part of a Full-Stack Developer 48-Hour Challenge.
 
+## 🚀 Live Demo
+
+| Layer | URL |
+|-------|-----|
+| **Frontend** | [events-tracker.sumitkushwaha.dev](https://events-tracker.sumitkushwaha.dev) |
+| **Backend API** | [event-tracker.sumitkushwaha.dev](https://event-tracker.sumitkushwaha.dev) |
+
+---
+
 ## Tech Stack
 
 | Layer | Technology | Reasoning |
@@ -153,6 +162,49 @@ VITE_API_URL=http://localhost:5000
 | **No refresh tokens** | Tokens expire in 7 days; production would add refresh token rotation |
 | **Vanilla CSS** | No Tailwind/shadcn to minimize setup; custom design system instead |
 | **filter on backend** | Deterministic query (gte/lt now) vs filtering client-side avoids sending all events over wire |
+
+---
+
+## Deployment
+
+### Frontend — Vercel
+
+Deployed at **[events-tracker.sumitkushwaha.dev](https://events-tracker.sumitkushwaha.dev)**
+
+- Framework preset: **Vite**
+- Root directory: `frontend/`
+- Build command: `pnpm build`
+- Output directory: `dist`
+- `vercel.json` includes a catch-all rewrite to `index.html` for client-side routing
+- Environment variable set in Vercel dashboard: `VITE_API_URL=https://event-tracker.sumitkushwaha.dev`
+
+### Backend — Custom VPS via Docker Hub
+
+Deployed at **[event-tracker.sumitkushwaha.dev](https://event-tracker.sumitkushwaha.dev)**
+
+The backend image is built and pushed to Docker Hub, then pulled and run on a custom VPS:
+
+```bash
+# Build and push (CI / local)
+docker build -t yourdockerhubuser/event-tracker-backend ./backend
+docker push yourdockerhubuser/event-tracker-backend
+
+# On the VPS — pull and run
+docker pull yourdockerhubuser/event-tracker-backend
+docker run -d \
+  --name event_tracker_api \
+  --restart unless-stopped \
+  -p 5000:5000 \
+  --env-file /path/to/.env \
+  yourdockerhubuser/event-tracker-backend
+```
+
+Run migrations once after first deploy:
+```bash
+docker exec event_tracker_api pnpm db:migrate:deploy
+```
+
+A reverse proxy (Nginx / Caddy) handles HTTPS and routes `event-tracker.sumitkushwaha.dev → localhost:5000`.
 
 ---
 
